@@ -3,16 +3,20 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { insertPost } from '../state/PostSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 function AddPost() {
+  const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
     const id = Math.floor(Math.random() *500)
-    dispatch(insertPost({id, title, description}))
+    dispatch(insertPost({id, title, description})).then(() =>{
+      navigate('/')
+    })
   }
   return (
     <div>

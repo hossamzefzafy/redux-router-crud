@@ -1,5 +1,6 @@
 import { Table } from "react-bootstrap" 
-import { memo } from "react";
+import{memo} from 'react'
+
   
     
     

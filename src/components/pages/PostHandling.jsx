@@ -7,7 +7,7 @@ function PostHandling({data, loading, error, deleteRecord}
 ) {
 
   const handlingDelete = (item)=>{
-    if (window.confirm('Are you sure you want to delete')){
+    if (window.confirm(`Are you sure you want to delete the post ${item.title} ?` )){
       deleteRecord(item.id)
     }
 

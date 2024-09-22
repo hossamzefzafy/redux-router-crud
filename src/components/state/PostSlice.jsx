@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-const initialState = {records : [], loading: false, console: null};
+const initialState = {records : [], loading: false, error: null, record:null};
 
 // First, create the thunk
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async(_, ThunkAPI)=>{
@@ -51,6 +51,23 @@ export const insertPost = createAsyncThunk("posts/insertPost", async(item, Thunk
 
 })
 
+export const fetchPost = createAsyncThunk("posts/fetchPost", async(id, ThunkAPI)=>{
+    const {rejectWithValue}= ThunkAPI
+    
+    try {
+        const res = await fetch(`http://localhost:5000/posts/${id}`, {
+           
+            })
+        const data = await res.json()
+        return data;
+        
+    } catch (error) {
+        return rejectWithValue(error.message)
+        
+    }
+
+})
+
 
 
 
@@ -71,6 +88,23 @@ const PostsSlice = createSlice({
         
     },
     [fetchPosts.rejected]: (state, action)=>{
+        state.loading = false;
+        state.error = action.payload;
+        
+    },
+    //Fitch post 
+    [fetchPost.pending]: (state)=>{
+        state.loading = true;
+        state.error = null;
+    },
+    [fetchPost.fulfilled]: (state, action)=>{
+        state.loading = false;
+        state.record = action.payload;
+       
+        
+        
+    },
+    [fetchPost.rejected]: (state, action)=>{
         state.loading = false;
         state.error = action.payload;
         

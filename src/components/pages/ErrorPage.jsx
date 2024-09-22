@@ -4,7 +4,7 @@ import { Container, Row, Col, Button} from "react-bootstrap";
  function ErrorPage() {
   const error = useRouteError();
   const navigate = useNavigate();
-  console.error(error);
+  
  
 
   return (

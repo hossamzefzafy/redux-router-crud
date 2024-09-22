@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button, ButtonGroup} from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner'
+import { useNavigate } from 'react-router-dom'
+import Details from './Details'
 
 function PostHandling({data, loading, error, deleteRecord}
 
@@ -12,11 +14,15 @@ function PostHandling({data, loading, error, deleteRecord}
     }
 
   }
+  const navigate = useNavigate()
+  const handleNavigate = (data)=>{
+    navigate(`/post/${data.id}`)
+  }
   
     const records = data.map((ele, index)=><tr key ={ele.id}>
-    <td>{++index}</td>
-    <td>{ele.title}</td>
-    <td>
+    <td onClick={()=>handleNavigate(ele)}>{++index}</td>
+    <td onClick={()=>handleNavigate(ele)}>{ele.title}</td>
+    <td onClick={()=>handleNavigate(ele)}>
       {ele.describtion}
     </td>
     <td>

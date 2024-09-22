@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector  } from 'react-redux';
 import { insertPost } from '../state/PostSlice';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading'
+;
 
 
 function AddPost() {
@@ -11,12 +13,17 @@ function AddPost() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const dispatch = useDispatch();
+  const {loading, error} = useSelector(state => state.posts)
   const submitHandler = (e) => {
     e.preventDefault();
     const id = Math.floor(Math.random() *500)
-    dispatch(insertPost({id, title, description})).then(() =>{
+    dispatch(insertPost({id, title, description})).unwrap().then(() =>{
       navigate('/')
+    }).catch(error=>{
+      console.log(error.message)
     })
+    
+    
   }
   return (
     <div>
@@ -29,7 +36,10 @@ function AddPost() {
         <Form.Label>description</Form.Label>
         <Form.Control as="textarea" rows={3} value={description} onChange={(e)=>setDescription(e.target.value)}/>
       </Form.Group>
-      <Button variant="primary" type='submit'>Submit</Button>
+      <Loading loading={loading} error={error}/>
+        <Button variant="primary" type='submit' disabled={loading}>Submit</Button>
+      
+      
     </Form>
     
 

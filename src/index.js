@@ -8,12 +8,24 @@ import RootLayout from "./components/pages/RootLayout";
 
 import AddPost from "./components/pages/AddPost";
 
-import Edit from "./components/pages/Edit";
+import EditPost from "./components/pages/EditPost";
 import Details from "./components/pages/Details";
 import Index from "./components/pages/Index";
 import ErrorPage from "./components/pages/ErrorPage";
 import { Provider } from "react-redux";
 import store from "./components/state/Index"
+const paramHandler = ({ params})=>{
+    if(isNaN(params.id)){
+    throw new Response("Bad Request", { statusText:'Please enter a valid ID',status: 400 })
+    }
+}
+
+
+
+
+
+  
+  
 
 const router = createBrowserRouter([{
   path: "/",
@@ -35,20 +47,14 @@ const router = createBrowserRouter([{
     },
     {
       path: "post/:id/edit",
-      element: <Edit/>,
+      element: <EditPost/>,
+      loader: paramHandler
     },
     {
       path: "post/:id",
       element: <Details/>,
-      loader: ({
-        params
-        })=>{
-       if(isNaN(params.id)){
-        throw new Response("Bad Request", { statusText:'Please enter a valid ID',status: 400 }
-         
-        );
-       }
-      }
+      loader: paramHandler
+      
     }
   ],
 }]);

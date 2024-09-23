@@ -41,6 +41,7 @@ export const insertPost = createAsyncThunk("posts/insertPost", async(item, Thunk
             headers: {'Content-Type': 'application/json; charset= utf-8'},
             body: JSON.stringify(item),
             })
+            console.log( res)
         const data = await res.json()
         return data;
         
@@ -59,6 +60,7 @@ export const fetchPost = createAsyncThunk("posts/fetchPost", async(id, ThunkAPI)
            
             })
         const data = await res.json()
+
         return data;
         
     } catch (error) {
@@ -68,6 +70,29 @@ export const fetchPost = createAsyncThunk("posts/fetchPost", async(id, ThunkAPI)
 
 })
 
+export const editPost = createAsyncThunk("posts/editPost", async(item, ThunkAPI)=>{
+    const {rejectWithValue}= ThunkAPI
+    
+    try {
+        const res = await fetch(`http://localhost:5000/posts/${item.id}`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json; charset= utf-8'},
+            body: JSON.stringify(item),
+            })
+        const data = await res.json()
+       
+        return data;
+        
+    } catch (error) {
+        return rejectWithValue(error.message)
+        
+    }
+
+})
+
+
+
+   
 
 
 
@@ -108,6 +133,21 @@ const PostsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         
+    },
+
+    //edit post 
+    [editPost.pending] : (state)=>{
+        state.loading = true;
+        state.error = null;
+    },
+    [editPost.fulfilled] : (state, action)=>{
+        state.loading = false;
+      state.record = action.payload
+      console.log(action.payload)
+    },
+    [editPost.rejected] : (state, action)=>{
+        state.loading = false;
+        state.error = action.payload;
     },
     //Delete post
     [deletePost.pending]: (state)=>{

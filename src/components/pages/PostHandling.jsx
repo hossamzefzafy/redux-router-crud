@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, ButtonGroup} from 'react-bootstrap'
 import Spinner from 'react-bootstrap/Spinner'
 import { useNavigate } from 'react-router-dom'
-import Details from './Details'
+
 
 function PostHandling({data, loading, error, deleteRecord}
 
@@ -27,7 +27,7 @@ function PostHandling({data, loading, error, deleteRecord}
     </td>
     <td>
       <ButtonGroup aria-label="Basic example">
-        <Button variant="success">Edit</Button>
+        <Button variant="success" onClick={()=>navigate(`/post/${ele.id}/edit`)}>Edit</Button>
         <Button variant="danger" onClick={()=>handlingDelete(ele)}>Delete</Button>
       </ButtonGroup>
     </td>

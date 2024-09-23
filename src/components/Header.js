@@ -11,12 +11,8 @@ const Header = () => {
         <li  className="me-3 ms-3">
           <NavLink to="add" >Add Post</NavLink>
         </li>
-        <li  className="me-3 ms-3">
-          <NavLink to="post/:id/edit">Edit Post</NavLink>
-        </li>
-        <li  className="me-3 ms-3">
-          <NavLink to="post/:id/" end >Post detail</NavLink>
-        </li>
+       
+        
         <li className="login">login</li>
       </ul>
     </div>
